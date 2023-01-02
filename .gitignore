@@ -1,0 +1,12 @@
+bin/*
+bin-int/*
+
+.vs/
+
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+imgui.ini
+
+*.sln
