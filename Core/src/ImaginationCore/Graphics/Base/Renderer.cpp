@@ -22,6 +22,8 @@ namespace Imagination {
 
 		void Renderer::Submit(const std::shared_ptr<ShaderProgram>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
 			shader->Bind();
+			shader->UploadUniformMat4("u_Transform", transform);
+
 			vertexArray->Bind();
 			RENDERERCOMMANDS.DrawIndexed(vertexArray);
 		}

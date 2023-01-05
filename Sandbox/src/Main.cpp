@@ -1,15 +1,25 @@
 #include <ImaginationCore/EntryPoint.h>
 #include <Imagination.h>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class SandboxLayer : public Imagination::Graphics::Layer {
 private:
 	std::shared_ptr<Imagination::Graphics::VertexArray> m_VertexArray;
 	std::shared_ptr<Imagination::Graphics::ShaderProgram> m_Shader;
 
+	glm::mat4 m_Transform;
+
 public:
 	SandboxLayer() : Imagination::Graphics::Layer("SandboxLayer") {
 		m_VertexArray.reset(Imagination::Graphics::VertexArray::Create());
 		m_Shader.reset(Imagination::Graphics::ShaderProgram::Create("assets/shaders/vertexShader.glsl", "assets/shaders/fragmentShader.glsl"));
+
+		glm::vec3 Position = glm::vec3(0.25f);
+		//glm::vec3 Rotation = glm::vec3(25.0f, 0.0f, 0.0f);
+		glm::vec3 Scale = glm::vec3(.5f);
+
+		m_Transform = glm::translate(glm::mat4(1.0f), Position) * glm::scale(glm::mat4(1.0f), Scale);
 
 		std::shared_ptr<Imagination::Graphics::VertexBuffer> vertexBuffer;
 		std::shared_ptr<Imagination::Graphics::IndexBuffer> indexBuffer;
@@ -37,7 +47,7 @@ public:
 	void OnUpdate() override {
 		Imagination::Graphics::Renderer::BeginScene();
 
-		Imagination::Graphics::Renderer::Submit(m_Shader, m_VertexArray);
+		Imagination::Graphics::Renderer::Submit(m_Shader, m_VertexArray, m_Transform);
 
 		Imagination::Graphics::Renderer::EndScene();
 	}
