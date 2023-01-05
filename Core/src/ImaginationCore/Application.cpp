@@ -33,6 +33,8 @@ namespace Imagination {
 	Application::~Application() {
 		DetachOverlay(m_ImGuiLayer);
 
+		delete m_ImGuiLayer;
+
 		s_Instance = nullptr;
 
 		IMAGINATION_LOG_INFO("Destructed Application object.");
@@ -64,6 +66,10 @@ namespace Imagination {
 
 			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::Stop() {
+		m_Running = false;
 	}
 
 }

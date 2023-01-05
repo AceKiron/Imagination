@@ -1,37 +1,23 @@
-#include <Imagination.h>
 #include <ImaginationCore/EntryPoint.h>
 
-#include <imgui.h>
+#include "Layers.h"
 
-class SandboxLayer : public Imagination::Graphics::Layer {
+class DockApplication : public Imagination::Application {
+private:
+	DockLayer* m_DockLayer;
 public:
-	SandboxLayer() : Imagination::Graphics::Layer("SandboxLayer") {
-
+	DockApplication(const Imagination::Graphics::WindowProps& props) : Imagination::Application(props) {
+		m_DockLayer = new DockLayer();
+		AttachOverlay(m_DockLayer);
 	}
 
-	void OnImGuiRender() override {
-		ImGui::Begin("Hello world!");
-		ImGui::Text("Lorem Ipsum blah blah blah...");
-		ImGui::End();
+	~DockApplication() {
+		delete m_DockLayer;
 	}
-};
-
-class SandboxApplication : public Imagination::Application {
-public:
-	SandboxApplication(const Imagination::Graphics::WindowProps& props) : Imagination::Application(props) {
-		AttachLayer(new SandboxLayer());
-		//IMAGINATION_SET_EVENT_CALLBACK(SandboxApplication::OnEvent);
-	}
-
-	/*void OnEvent(Imagination::Events::Event& event) {
-		Imagination::Application::OnEvent(event);
-
-		IMAGINATION_LOG_WARN(event.ToString());
-	}*/
 };
 
 Imagination::Application* Imagination::CreateApplication() {
 	Imagination::Graphics::WindowProps props;
 
-	return new SandboxApplication(props);
+	return new DockApplication(props);
 }

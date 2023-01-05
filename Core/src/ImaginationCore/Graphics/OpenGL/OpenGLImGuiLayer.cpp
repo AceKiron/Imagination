@@ -31,6 +31,8 @@ namespace Imagination {
 
 			// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 			ImGuiStyle& style = ImGui::GetStyle();
+			style.WindowMenuButtonPosition = ImGuiDir_None;
+
 			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
 				style.WindowRounding = 0.0f;
 				style.Colors[ImGuiCol_WindowBg].w = 1.0f;

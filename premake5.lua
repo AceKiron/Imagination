@@ -2,7 +2,7 @@ include "Dependencies.lua"
 
 workspace "Imagination"
     architecture "x64"
-    startproject "Imagination"
+    startproject "Sandbox"
 
     configurations {
         "Debug",
@@ -24,4 +24,8 @@ group ""
 
 group "Tools"
     include "Imagination"
+group ""
+
+group "Misc"
+    include "Sandbox"
 group ""

@@ -23,12 +23,15 @@ namespace Imagination {
 
 		void Run();
 
+		void Stop();
+
 		void AttachLayer(Graphics::Layer* layer) { m_LayerStack->AttachLayer(layer); }
 		void AttachOverlay(Graphics::Layer* overlay) { m_LayerStack->AttachOverlay(overlay); }
 
 		void DetachLayer(Graphics::Layer* layer) { m_LayerStack->DetachLayer(layer); }
 		void DetachOverlay(Graphics::Layer* overlay) { m_LayerStack->DetachOverlay(overlay); }
 
+		inline Graphics::RendererCommands& GetRendererCommands() const { return *m_Renderer; }
 		inline Graphics::Window& GetWindow() const { return *m_Window; }
 
 		inline static Application& Get() { return *s_Instance; }

@@ -21,7 +21,8 @@ namespace Imagination {
 			m_Data.VSync = props.VSync;
 
 			if (!s_GLFWInitialized) {
-				IMAGINATION_ASSERT(glfwInit(), "Could not initialize GLFW!");
+				int success = glfwInit();
+				IMAGINATION_ASSERT(success, "Could not initialize GLFW!");
 				glfwSetErrorCallback(GLFWErrorCallback);
 				s_GLFWInitialized = true;
 			}

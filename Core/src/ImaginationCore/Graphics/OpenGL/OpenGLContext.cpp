@@ -16,7 +16,8 @@ namespace Imagination {
 		void OpenGLContext::Init() {
 			glfwMakeContextCurrent(m_WindowHandle);
 
-			IMAGINATION_ASSERT(gladLoadGLLoader((GLADloadproc) glfwGetProcAddress), "Failed to initialize Glad!");
+			int success = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+			IMAGINATION_ASSERT(success, "Failed to initialize Glad!");
 
 			IMAGINATION_LOG_INFO("OpenGL Info:");
 			IMAGINATION_LOG_INFO("  Vendor: {0}", (const char*) glGetString(GL_VENDOR));

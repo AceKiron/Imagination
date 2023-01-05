@@ -17,8 +17,10 @@
 #else
 	// Dist configuration
 	#define IMAGINATION_DEBUG_BREAK(...)
-	#define IMAGINE_ASSERT(x, ...)
+	#define IMAGINATION_ASSERT(x, ...)
 #endif
 #endif
+
+#define IMAGINATION_VERSION "1.0.0"
 
 #define BIT(x) (1 << x)
