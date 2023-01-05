@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
+#include "ShaderProgram.h"
 #include "VertexArray.h"
 
 namespace Imagination {
@@ -14,7 +15,7 @@ namespace Imagination {
 			static void BeginScene();
 			static void EndScene();
 
-			static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
+			static void Submit(const std::shared_ptr<ShaderProgram>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
 		private:
 			struct SceneData

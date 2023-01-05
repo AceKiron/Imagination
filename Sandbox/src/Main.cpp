@@ -4,10 +4,12 @@
 class SandboxLayer : public Imagination::Graphics::Layer {
 private:
 	std::shared_ptr<Imagination::Graphics::VertexArray> m_VertexArray;
+	std::shared_ptr<Imagination::Graphics::ShaderProgram> m_Shader;
 
 public:
 	SandboxLayer() : Imagination::Graphics::Layer("SandboxLayer") {
 		m_VertexArray.reset(Imagination::Graphics::VertexArray::Create());
+		m_Shader.reset(Imagination::Graphics::ShaderProgram::Create("assets/shaders/vertexShader.glsl", "assets/shaders/fragmentShader.glsl"));
 
 		std::shared_ptr<Imagination::Graphics::VertexBuffer> vertexBuffer;
 		std::shared_ptr<Imagination::Graphics::IndexBuffer> indexBuffer;
@@ -35,7 +37,7 @@ public:
 	void OnUpdate() override {
 		Imagination::Graphics::Renderer::BeginScene();
 
-		Imagination::Graphics::Renderer::Submit(m_VertexArray);
+		Imagination::Graphics::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Imagination::Graphics::Renderer::EndScene();
 	}
