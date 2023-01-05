@@ -7,6 +7,8 @@
 #include <functional>
 #include <sstream>
 #include <fstream>
+#include <concepts>
+#include <map>
 
 #ifdef IMAGINATION_PLATFORM_WINDOWS
 #include <windows.h>
