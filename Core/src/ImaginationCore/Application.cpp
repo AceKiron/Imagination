@@ -20,6 +20,7 @@ namespace Imagination {
 		IMAGINATION_SET_EVENT_CALLBACK(Application::OnEvent);
 
 		m_Running = false;
+		m_Minimized = false;
 
 		AttachOverlay(m_ImGuiLayer);
 
@@ -43,10 +44,25 @@ namespace Imagination {
 	void Application::OnEvent(Events::Event& event) {
 		switch (event.GetType()) {
 			case Events::WindowClose:
-				m_Running = false;
+				Stop();
+				event.MarkHandled();
+				break;
+
+			case Events::WindowResize:
+				OnWindowResize((Events::WindowResizeEvent&) event);
 				event.MarkHandled();
 				break;
 		}
+	}
+
+	void Application::OnWindowResize(Events::WindowResizeEvent& event) {
+		if (event.GetVector()->x == 0 || event.GetVector()->y == 0) {
+			m_Minimized = true;
+			return;
+		}
+
+		m_Minimized = false;
+		m_Renderer->SetViewport(0, 0, event.GetVector()->x, event.GetVector()->y);
 	}
 
 	void Application::Run() {
@@ -56,20 +72,18 @@ namespace Imagination {
 			m_Renderer->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1));
 			m_Renderer->Clear();
 
-			for (Graphics::Layer* layer : m_LayerStack->GetLayers()) layer->OnUpdate();
-			for (Graphics::Layer* overlay : m_LayerStack->GetOverlays()) overlay->OnUpdate();
+			if (!m_Minimized) {
+				for (Graphics::Layer* layer : m_LayerStack->GetLayers()) layer->OnUpdate();
+				for (Graphics::Layer* overlay : m_LayerStack->GetOverlays()) overlay->OnUpdate();
 
-			m_ImGuiLayer->Begin();
-			for (Graphics::Layer* layer : m_LayerStack->GetLayers()) layer->OnImGuiRender();
-			for (Graphics::Layer* overlay : m_LayerStack->GetOverlays()) overlay->OnImGuiRender();
-			m_ImGuiLayer->End();
+				m_ImGuiLayer->Begin();
+				for (Graphics::Layer* layer : m_LayerStack->GetLayers()) layer->OnImGuiRender();
+				for (Graphics::Layer* overlay : m_LayerStack->GetOverlays()) overlay->OnImGuiRender();
+				m_ImGuiLayer->End();
+			}
 
 			m_Window->OnUpdate();
 		}
-	}
-
-	void Application::Stop() {
-		m_Running = false;
 	}
 
 }

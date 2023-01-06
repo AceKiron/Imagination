@@ -21,9 +21,11 @@ namespace Imagination {
 
 		void OnEvent(Events::Event& event);
 
+		void OnWindowResize(Events::WindowResizeEvent& event);
+
 		void Run();
 
-		void Stop();
+		inline void Stop() { m_Running = false; }
 
 		void AttachLayer(Graphics::Layer* layer) { m_LayerStack->AttachLayer(layer); }
 		void AttachOverlay(Graphics::Layer* overlay) { m_LayerStack->AttachOverlay(overlay); }
@@ -37,7 +39,7 @@ namespace Imagination {
 		inline static Application& Get() { return *s_Instance; }
 
 	private:
-		bool m_Running;
+		bool m_Running, m_Minimized;
 
 		std::unique_ptr<Graphics::LayerStack> m_LayerStack;
 		std::unique_ptr<Graphics::RendererCommands> m_Renderer;
