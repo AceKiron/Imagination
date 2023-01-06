@@ -13,6 +13,9 @@ namespace Imagination {
 				case RendererAPI::API::OpenGL:
 					return new OpenGLImGuiLayer();
 			}
+
+			IMAGINATION_LOG_WARN("Unknown RendererAPI in abstract ImGuiLayer class.");
+			return nullptr;
 		}
 
 	}

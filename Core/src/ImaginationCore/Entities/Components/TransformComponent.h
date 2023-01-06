@@ -13,6 +13,8 @@ namespace Imagination {
 
 			class TransformComponent : public BaseComponent {
 			public:
+				TransformComponent() : BaseComponent(), m_Transform(glm::mat4(1.0f)), m_Position(glm::vec3(0.0f)), m_Rotation(glm::vec3(0.0f)), m_Scale(glm::vec3(0.0f)) {}
+
 				TransformComponent(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) : BaseComponent(), m_Position(position), m_Rotation(rotation), m_Scale(scale) {
 					RecalculateMatrix();
 				}
@@ -29,9 +31,7 @@ namespace Imagination {
 				inline void SetScale(const glm::vec3& scale) { m_Scale = scale; RecalculateMatrix(); }
 
 			private:
-				void RecalculateMatrix() {
-					m_Transform = glm::translate(glm::scale(glm::mat4(1.0f), m_Scale) * glm::toMat4(glm::quat(m_Rotation)), m_Position);
-				}
+				void RecalculateMatrix() { m_Transform = glm::translate(glm::scale(glm::mat4(1.0f), m_Scale) * glm::toMat4(glm::quat(m_Rotation)), m_Position); }
 
 				glm::mat4 m_Transform;
 				glm::vec3 m_Position, m_Rotation, m_Scale;

@@ -13,6 +13,9 @@ namespace Imagination {
 				case RendererAPI::API::OpenGL:
 					return new OpenGLRendererCommands();
 			}
+
+			IMAGINATION_LOG_WARN("Unknown RendererAPI in abstract RendererCommands class.");
+			return nullptr;
 		}
 
 	}

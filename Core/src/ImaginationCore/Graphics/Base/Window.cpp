@@ -13,6 +13,9 @@ namespace Imagination {
 				case RendererAPI::API::OpenGL:
 					return new OpenGLWindow(props);
 			}
+
+			IMAGINATION_LOG_WARN("Unknown RendererAPI in abstract Window class.");
+			return nullptr;
 		}
 
 	}

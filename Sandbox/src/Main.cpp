@@ -13,18 +13,23 @@ public:
 		m_Entity.reset(new Imagination::Entities::Entity());
 		m_Shader.reset(Imagination::Graphics::ShaderProgram::Create("assets/shaders/vertexShader.glsl", "assets/shaders/fragmentShader.glsl"));
 
+		Imagination::Entities::Components::SpriteComponent* spriteComponent = new Imagination::Entities::Components::SpriteComponent();
+
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		uint32_t indices[3] = { 0, 1, 2 };
 		Imagination::Graphics::BufferLayout layout = {
 			{ Imagination::Graphics::ShaderDataType::Float3, "a_Position" },
 			{ Imagination::Graphics::ShaderDataType::Float4, "a_Color" }
 		};
+		spriteComponent->AddVertexBuffer(vertices, sizeof(vertices), layout);
+
+		uint32_t indices[3] = { 0, 1, 2 };
+		spriteComponent->SetIndexBuffer(indices, sizeof(indices) / sizeof(uint32_t));
 		
-		m_Entity->AddComponent("sprite", new Imagination::Entities::Components::SpriteComponent(vertices, indices, layout));
+		m_Entity->AddComponent("sprite", spriteComponent);
 		m_Entity->AddComponent("transform", new Imagination::Entities::Components::TransformComponent(glm::vec3(0.25f), glm::vec3(0.0f), glm::vec3(0.5f)));
 	}
 

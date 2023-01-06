@@ -22,8 +22,6 @@ namespace Imagination {
 				
 				m_Components[key] = ptr;
 				value->OnAttach();
-
-				IMAGINATION_LOG_INFO("Added {0} component", typeid(value).name());
 			}
 
 			template <class T>
@@ -31,6 +29,9 @@ namespace Imagination {
 				if (auto search = m_Components.find(key); search != m_Components.end()) {
 					return *std::dynamic_pointer_cast<T>(search->second);
 				}
+
+				IMAGINATION_LOG_WARN("Requested non-existing component {0}, one is being being returned using the default constructor instead.", key);
+				return *(new T());
 			}
 
 		private:

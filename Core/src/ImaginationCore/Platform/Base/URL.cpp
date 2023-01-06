@@ -11,6 +11,9 @@ namespace Imagination {
 				case Platform::PlatformEnum::Windows:
 					return new WindowsURL(url);
 			}
+
+			IMAGINATION_LOG_WARN("Unknown Platform in abstract URL class.");
+			return nullptr;
 		}
 
 	}

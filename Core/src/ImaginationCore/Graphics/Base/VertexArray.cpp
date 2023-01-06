@@ -13,6 +13,9 @@ namespace Imagination {
 				case RendererAPI::API::OpenGL:
 					return new OpenGLVertexArray();
 			}
+
+			IMAGINATION_LOG_WARN("Unknown RendererAPI in abstract VertexArray class.");
+			return nullptr;
 		}
 
 	}
